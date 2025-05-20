@@ -9,4 +9,17 @@
     gap: 0.5rem;
     padding: 25px;
 }
+.image-area{
+    position:relative !important;
+    width: max-content !important;
+    display: inline-block !important;
+}
+
+.image-delete-button{
+    right:8px !important;
+    top:8px !important;
+    position: absolute !important;
+    background: black !important;
+    color: white !important;
+}
 

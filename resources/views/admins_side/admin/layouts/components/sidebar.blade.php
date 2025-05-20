@@ -27,7 +27,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="" class="nav-link">
+                    <a href="{{ route('admin.dashboard.customer-index')}}" class="nav-link">
                         <i class="nav-icon fas fa-user-friends"></i>
                         <p>Customers</p>
                     </a>
@@ -55,7 +55,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="" class="nav-link">
+                    <a href="{{ route('admin.dashboard.handyman-index')}}" class="nav-link">
                         <i class="nav-icon fas fa-user-tie"></i>
                         <p>Handy Men</p>
                     </a>

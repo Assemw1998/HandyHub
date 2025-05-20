@@ -60,6 +60,13 @@ return [
             'report' => false,
         ],
 
+        'images' => [
+            'driver' => 'local',
+            'root'   => public_path() . '/',
+            'url' => env('APP_URL') . '/storage/images',
+            'visibility' => 'public',
+        ],
+
     ],
 
     /*

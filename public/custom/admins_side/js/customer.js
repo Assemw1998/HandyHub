@@ -1,17 +1,37 @@
 $(document).ready(function () {
     var token = $('meta[name="csrf-token"]').attr('content');
-    var table = $('#customer_table').DataTable({
+    var table = $('#customers_table').DataTable({
         responsive: true,
         sScrollX: '100%',
         sScrollXInner: "100%",
     });
 
+    $(document).on("click", ".show", function (e) {
+        $("#password").attr("type", "password");
+        $(this).children().removeClass("fa-eye");
+        $(this).children().addClass("fa-eye-slash");
+        $(this).removeClass("show");
+        $(this).addClass("hide");
+    });
+
+    $(document).on("click", ".hide", function (e) {
+        $("#password").attr("type", "text");
+        $(this).children().removeClass("fa-eye-slash");
+        $(this).children().addClass("fa-eye");
+        $(this).removeClass("hide");
+        $(this).addClass("show");
+    });
+    $(document).on("click", ".generate-password", function (e) {
+        let password = generatePassword();
+        $("#password").val(password);
+    });
+
+
     //delete
     $(document).on("click", ".delete", function (e) {
+
         e.preventDefault();
         var id = $(this).attr('data-id');
-        var url = $(this).attr('data-url');
-        var url_index = $(this).attr('data-url-index');
         $.confirm({
             title: 'Customer delete',
             content: 'Are you sure that you wnat to delete this customer?',
@@ -24,7 +44,7 @@ $(document).ready(function () {
                     action: function () {
                         $.ajax({
                             type: 'POST',
-                            url: url,
+                            url: '/admin/dashboard/customer-delete',
                             data: {
                                 _token: token,
                                 id: id,
@@ -41,7 +61,7 @@ $(document).ready(function () {
                                                 text: 'Okay',
                                                 btnClass: 'btn-green',
                                                 action: function () {
-                                                    window.location.replace(url_index);
+                                                    window.location.replace('/admin/dashboard/customer-index');
                                                 }
                                             },
                                         }
@@ -79,143 +99,22 @@ $(document).ready(function () {
         });
     });
 
-    $(document).on("change", "#car_make_id", function (e) {
-        let car_make_id = $(this).val();
-        var url = $(this).attr('data-url');
-        if (!car_make_id)
-            car_make_id = 0;
-        $.ajax({
-            type: 'GET',
-            url: url + car_make_id,
-            data: {
-                _token: token,
-            },
-            success: function (data) {
-                $('#car_model_id :gt(0)').remove();
-                if (data != false) {
-                    $.each(data, function (index, option) {
-                        $("#car_model_id").append('<option value="' + option['id'] + '">' + option['name'] + '</option>');
-                    });
-                } else {
-                    $.confirm({
-                        title: 'Car make name',
-                        content: 'Car make name is required',
-                        type: 'red',
-                        typeAnimated: true,
-                        buttons: {
-                            tryAgain: {
-                                text: 'Okay',
-                                btnClass: 'btn-red',
-                                action: function () {
-                                }
-                            },
-                        }
-                    });
-                }
-            },
-        }).fail(function (jqXHR, textStatus, errorThrown) {
-            $.confirm({
-                title: 'Technical Error',
-                content: 'Somthing went wrong please try again later.',
-                type: 'red',
-                typeAnimated: true,
-                buttons: {
-                    tryAgain: {
-                        text: 'Okay',
-                        btnClass: 'btn-red',
-                        action: function () {
-                            location.reload();
-                        }
-                    },
-                }
-            });
-        });
-    });
 
-    $(document).on("change", "#country_id", function (e) {
-        let country_id = $(this).val();
-        var url = $(this).attr('data-url');
-        if (!country_id)
-            country_id = 0;
-        $.ajax({
-            type: 'GET',
-            url: url + country_id,
-            data: {
-                _token: token,
-            },
-            success: function (data) {
-                $('#city_id :gt(0)').remove();
-                if (data != false) {
-                    $.each(data, function (index, option) {
-                        $("#city_id").append('<option value="' + option['id'] + '">' + option['name'] + '</option>');
-                    });
-                } else {
-                    $.confirm({
-                        title: 'Country name',
-                        content: 'Country name is required',
-                        type: 'red',
-                        typeAnimated: true,
-                        buttons: {
-                            tryAgain: {
-                                text: 'Okay',
-                                btnClass: 'btn-red',
-                                action: function () {
-                                }
-                            },
-                        }
-                    });
-                }
-            },
-        }).fail(function (jqXHR, textStatus, errorThrown) {
-            $.confirm({
-                title: 'Technical Error',
-                content: 'Somthing went wrong please try again later.',
-                type: 'red',
-                typeAnimated: true,
-                buttons: {
-                    tryAgain: {
-                        text: 'Okay',
-                        btnClass: 'btn-red',
-                        action: function () {
-                            location.reload();
-                        }
-                    },
-                }
-            });
-        });
-    });
+    //activate deactivate
+    $(document).on("click", ".activate-deactivate", function (e) {
 
-
-    //delete
-    $(document).on("click", ".send-email", function (e) {
         e.preventDefault();
-        var id = $(this).attr('data-id');
-        var url = $(this).attr('data-url');
-        $(this).prop( "disabled", true );
+        var model_id = $(this).attr('data-id');
         $.ajax({
             type: 'POST',
-            url: url,
+            url: '/admin/dashboard/customer-activate-deactivate',
             data: {
                 _token: token,
-                id: id,
+                id: model_id,
             },
             success: function (data) {
                 if (data == true) {
-                    $.confirm({
-                        title: 'successfully',
-                        content: 'Email has been send to the customer successfully',
-                        type: 'green',
-                        typeAnimated: true,
-                        buttons: {
-                            tryAgain: {
-                                text: 'Okay',
-                                btnClass: 'btn-green',
-                                action: function () {
-                                    location.reload();
-                                }
-                            },
-                        }
-                    });
+                    location.reload();
                 }
 
             },
@@ -236,10 +135,118 @@ $(document).ready(function () {
                 }
             });
         });
-                    
-              
-            
-    
+    });
+    $(document).on("click", ".image-delete-button", function (e) {
+        e.preventDefault();
+        var id = $(this).attr('data-id')
+        $.confirm({
+            title: 'Image delete',
+            content: 'are you sure that you wnat to delete this image?',
+            type: 'red',
+            typeAnimated: true,
+            buttons: {
+                Yes: {
+                    text: 'Yes',
+                    btnClass: 'btn-red',
+                    action: function () {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/admin/dashboard/customer-profile-delete-image',
+                            data: {
+                                _token: token,
+                                id: id,
+                            },
+                            success: function (data) {
+                                if (data == 1) {
+                                    $.confirm({
+                                        title: 'Deleted',
+                                        content: 'Image has been deleted successfully',
+                                        type: 'green',
+                                        typeAnimated: true,
+                                        buttons: {
+                                            tryAgain: {
+                                                text: 'Okay',
+                                                btnClass: 'btn-green',
+                                                action: function () {
+                                                    location.reload();
+                                                }
+                                            },
+                                        }
+                                    });
+                                }
+
+                            },
+                        }).fail(function (jqXHR, textStatus, errorThrown) {
+                            $.confirm({
+                                title: 'Technical Error',
+                                content: 'Somthing went wrong please try again later.',
+                                type: 'red',
+                                typeAnimated: true,
+                                buttons: {
+                                    tryAgain: {
+                                        text: 'Okay',
+                                        btnClass: 'btn-red',
+                                        action: function () {
+                                            location.reload();
+                                        }
+                                    },
+                                }
+                            });
+                        });
+                    }
+                },
+                Cancel: {
+                    text: 'Cancel',
+                    btnClass: 'btn-green',
+                    action: function () {
+
+                    }
+                },
+            }
+        });
     });
 
 });
+const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+function generatePassword(length = 10) {
+    let result = ' ';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+
+    return result;
+}
+
+function preview_image(id, area) {
+    var images = document.getElementById(id).files.length;
+    var validExtensions = ['jpg', 'png', 'jpeg'];
+    $(area).empty();
+    for (var i = 0; i < images; i++) {
+
+        var fileName = document.getElementById(id).files[i].name;
+        var fileNameExt = fileName.substr(fileName.lastIndexOf('.') + 1);
+
+        if ($.inArray(fileNameExt, validExtensions) == -1) {
+            $('#' + id).val(null);
+            $.confirm({
+                title: 'Validation Error',
+                content: 'Only these type of files are accepted: ' + validExtensions.join(', '),
+                type: 'red',
+                typeAnimated: true,
+                buttons: {
+                    tryAgain: {
+                        text: 'Okay',
+                        btnClass: 'btn-red',
+                        action: function () {
+                        }
+                    },
+                }
+            });
+        } else {
+            $(area).append("<img width='200' height='150' class='rounded p-2' src=" + URL.createObjectURL(event.target.files[i]) + ">");
+        }
+
+    }
+}

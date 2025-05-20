@@ -18,9 +18,9 @@ class LoginController extends Controller
 
     public function login(AdminLoginRequest $request)
     {
-//        $admin = Admin::first();
-//        $admin->password = '123456';
-//        $admin->save();
+        $admin = Admin::first();
+        $admin->password = '123456';
+        $admin->save();
 
         $credentials = $request->getCredentials();
 
