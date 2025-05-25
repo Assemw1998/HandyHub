@@ -9,7 +9,7 @@ class HandyMen extends Model
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 0;
     protected $table = 'handy_men';
-    protected $fillable = ['full_name', 'email', 'phone_number', 'address', 'created_by', 'updated_by'];
+    protected $fillable = ['full_name', 'email', 'phone_number', 'address','status', 'created_by', 'updated_by'];
 
     public function services()
     {

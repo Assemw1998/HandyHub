@@ -59,6 +59,28 @@ Route::group(['namespace' => 'App\Http\Controllers\admins_side\admin', 'as' => '
         Route::post('category-delete', 'dashboard\CategoryController@delete')->name('category-delete');
         Route::get('category-update-view/{id}', 'dashboard\CategoryController@updateView')->name('category-update-view');
         Route::post('category-update/{id}', 'dashboard\CategoryController@update')->name('category-update');
+        Route::post('category-activate-deactivate', 'dashboard\CategoryController@activateDeactivate')->name('category-activate-deactivate');
+
+        #SERVICE#
+        Route::get('service-index', 'dashboard\ServiceController@index')->name('service-index');
+        Route::get('service-create-view', 'dashboard\ServiceController@createview')->name('service-create-view');
+        Route::post('service-create', 'dashboard\ServiceController@create')->name('service-create');
+        Route::get('service-view/{id}', 'dashboard\ServiceController@view')->name('service-view');
+        Route::post('service-activate-deactivate', 'dashboard\ServiceController@activateDeactivate')->name('service-activate-deactivate');
+        Route::post('service-delete', 'dashboard\ServiceController@delete')->name('service-delete');
+        Route::get('service-update-view/{id}', 'dashboard\ServiceController@updateView')->name('service-update-view');
+        Route::post('service-update/{id}', 'dashboard\ServiceController@update')->name('service-update');
+        Route::post('service-profile-delete-image', 'dashboard\ServiceController@deleteProfileImage')->name('service-profile-delete-image');
+
+        #BACKGROUND IMAGES#
+        Route::get('background-image-index', 'dashboard\BackgroundImagesController@index')->name('background-image-index');
+        Route::get('background-image-create-view', 'dashboard\BackgroundImagesController@createview')->name('background-image-create-view');
+        Route::post('background-image-create', 'dashboard\BackgroundImagesController@create')->name('background-image-create');
+        Route::get('background-image-view/{id}', 'dashboard\BackgroundImagesController@view')->name('background-image-view');
+        Route::post('background-image-delete', 'dashboard\BackgroundImagesController@delete')->name('background-image-delete');
+        Route::get('background-image-update-view/{id}', 'dashboard\BackgroundImagesController@updateView')->name('background-image-update-view');
+        Route::post('background-image-update/{id}', 'dashboard\BackgroundImagesController@update')->name('background-image-update');
+        Route::post('background-image-delete-image', 'dashboard\BackgroundImagesController@deleteImage')->name('background-image-delete-image');
     });
 });
 

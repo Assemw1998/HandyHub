@@ -20,7 +20,8 @@
     <div class="col-12 col-lg-6 p-0 mb-2">
             <a class="btn btn-outline-success  col-lg-3 col-12 update mb-2" href="{{ route('admin.dashboard.category-update-view',['id' => $category->id])}}" data-id="">Update</a>
             <a class="btn btn-outline-danger col-lg-3 col-12 delete mb-2" data-id="{{$category->id}}">Delete</a>
-        </div>
+          <a class="btn btn-outline-info col-lg-3 col-12 mb-2 activate-deactivate" data-id="{{$category->id}}">{{($category->status?'Deactivate':'Activate')}}</a>
+    </div>
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
                 <div class="form-group">

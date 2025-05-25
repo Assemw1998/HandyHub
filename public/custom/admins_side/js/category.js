@@ -77,4 +77,41 @@ $(document).ready(function () {
         });
     });
 
+    //activate deactivate
+    $(document).on("click", ".activate-deactivate", function (e) {
+
+        e.preventDefault();
+        var model_id = $(this).attr('data-id');
+        $.ajax({
+            type: 'POST',
+            url: '/admin/dashboard/category-activate-deactivate',
+            data: {
+                _token: token,
+                id: model_id,
+            },
+            success: function (data) {
+                if (data == true) {
+                    location.reload();
+                }
+
+            },
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            $.confirm({
+                title: 'Technical Error',
+                content: 'Somthing went wrong please try again later.',
+                type: 'red',
+                typeAnimated: true,
+                buttons: {
+                    tryAgain: {
+                        text: 'Okay',
+                        btnClass: 'btn-red',
+                        action: function () {
+                            location.reload();
+                        }
+                    },
+                }
+            });
+        });
+    });
+
 });

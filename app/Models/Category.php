@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-    protected $fillable = ['name', 'created_by', 'updated_by'];
+    const STATUS_ACTIVE = 1;
+    const STATUS_INACTIVE = 0;
+    protected $fillable = ['name','status','created_by', 'updated_by'];
 
     public function services()
     {
@@ -32,29 +34,33 @@ class Category extends Model
     {
         parent::boot();
 
-        self::creating(function ($city) {
-            $city->created_by = auth()->user()->id;
-            $city->updated_by = auth()->user()->id;
+        self::creating(function ($category) {
+            $category->created_by = auth()->user()->id;
+            $category->updated_by = auth()->user()->id;
         });
 
-        self::created(function ($city) {
+        self::created(function ($category) {
             // ... code here
         });
 
-        self::updating(function ($city) {
-            $city->updated_by = auth()->user()->id;
+        self::updating(function ($category) {
+            $category->updated_by = auth()->user()->id;
         });
 
-        self::updated(function ($city) {
+        self::updated(function ($category) {
             // ... code here
         });
 
-        self::deleting(function ($city) {
+        self::deleting(function ($category) {
             // ... code here
         });
 
-        self::deleted(function ($city) {
+        self::deleted(function ($category) {
             // ... code here
         });
+    }
+    public function getStatusLabelAttribute()
+    {
+        return $this->status ? "Active" : "Inactive";
     }
 }

@@ -16,7 +16,7 @@
         </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
-    <section action="" class="mt-3 content text-dark center p-3">
+    <section class="mt-3 content text-dark center p-3">
         <form action="{{ route('admin.dashboard.category-create')}}" method="POST" autocomplete="off">
             @csrf
             <div class="form-group">

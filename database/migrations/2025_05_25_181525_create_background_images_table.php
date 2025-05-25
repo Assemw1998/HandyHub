@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('handy_men', function (Blueprint $table) {
+        Schema::create('background_images', function (Blueprint $table) {
             $table->id();
-            $table->string('full_name');
-            $table->string('email')->unique();
-            $table->string('phone_number');
-            $table->text('address')->nullable();
-            $table->unsignedBigInteger('created_by')->nullable();
-            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->string('image_url')->nullable();
+            $table->string('background_image_title');
+            $table->string('background_image_description');
+            $table->integer('created_by')->default(NULL);
+            $table->integer('updated_by')->default(NULL);
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('handy_men');
+        Schema::dropIfExists('background_images');
     }
 };

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('phone_number');
             $table->text('address')->nullable();
             $table->string('password');
-            $table->tinyInteger('status')->nullable();
+            $table->tinyInteger('status')->default(1)->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();

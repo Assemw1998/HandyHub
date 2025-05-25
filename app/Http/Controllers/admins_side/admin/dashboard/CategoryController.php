@@ -60,6 +60,22 @@ class CategoryController extends Controller
         }
     }
 
+    public function activateDeactivate(Request $request)
+    {
+        $category = Category::find($request->id);
+
+        if ($category->status == Category::STATUS_ACTIVE) {
+            $category->status = Category::STATUS_INACTIVE;
+        } elseif ($category->status == Category::STATUS_INACTIVE) {
+            $category->status = Category::STATUS_ACTIVE;
+        }
+        if ($category->save()) {
+            return true;
+        }
+
+        return false;
+    }
+
     public function delete(Request $request)
     {
 

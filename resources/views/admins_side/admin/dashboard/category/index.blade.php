@@ -23,6 +23,7 @@
                     <tr>
                         <th>#</th>
                         <th>Category Name</th>
+                        <th>Status</th>
                         <th>Created By</th>
                         <th>Updated By</th>
                         <th>Created At</th>
@@ -35,6 +36,10 @@
                         <tr>
                             <td>{{$category->id}}</td>
                             <td>{{$category->name}}</td>
+                            <td><span class="
+                        @if($category->status) bg-success
+                        @else bg-danger
+                        @endif p-1">{{$category->status_label}}</span></td>
                             <td>{{$category->AdminCreatedBy->full_name}}</td>
                             <td>{{$category->AdminUpdatedBy->full_name}}</td>
                             <td>{{$category->created_at}}</td>
