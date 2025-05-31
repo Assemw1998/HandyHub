@@ -8,9 +8,24 @@ use Illuminate\Support\Facades\Route;
 Route::group(['namespace' => 'App\Http\Controllers\client_side'], function () {
     Route::get('/', 'ClientSideController@index')->name('/');
     Route::get('/about', 'ClientSideController@about')->name('about');
-    Route::get('/services', 'ClientSideController@services')->name('services');
-    Route::get('/register-handyman', 'ClientSideController@registerHandyman')->name('register.handyman');
-    Route::get('/contact', 'ClientSideController@contact')->name('contact');
+    Route::get('/contact-us', 'ClientSideController@contactUs')->name('contact-us');
+    Route::post('/contact-us-store', 'ClientSideController@contactUsStore')->name('contact-us-store');
+    Route::get('/category', 'ClientSideController@servicesByCategory')->name('category');
+
+});
+
+Route::group(['namespace' => 'App\Http\Controllers\client_side\Auth', 'as' => 'customer.', 'prefix' => 'customer'], function () {
+    Route::get('show-register', 'CustomerAuthController@showRegisterForm')->name('show-register');
+    Route::post('register', 'CustomerAuthController@register')->name('register');
+
+    Route::get('show-login', 'CustomerAuthController@showLoginForm')->name('show-login');
+    Route::post('login', 'CustomerAuthController@login')->name('login');
+
+    Route::post('logout', 'CustomerAuthController@logout')->name('logout');
+});
+
+Route::group(['middleware' => ['auth:customer'], 'as' => 'profile.', 'prefix' => 'profile'], function () {
+    Route::get('customer-profile', 'profile\CustomerProfileController@index')->name('customer-profile');
 });
 #*****************************************#
 

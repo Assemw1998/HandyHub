@@ -10,10 +10,9 @@
         <div class="footer-section">
             <h3>Handy Links</h3>
             <ul>
-                <li><a href="{{ route('about') }}">About Us</a></li>
-                <li><a href="{{ route('services') }}">Services</a></li>
-                <li><a href="{{ route('register.handyman') }}">Register as Handyman</a></li>
-                <li><a href="{{ route('contact') }}">Contact</a></li>
+                <li><a href="{{ route('/') }}">Home</a></li>
+                <li><a href="{{ route('about') }}">About</a></li>
+                <li><a href="{{ route('contact-us') }}">Contact</a></li>
             </ul>
         </div>
         <div class="footer-section">

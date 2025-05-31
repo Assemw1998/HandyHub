@@ -363,10 +363,8 @@ nav {
 .hero,
 .about-hero,
 .services-hero {
-    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
-    url('https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=1200&h=600&fit=crop');
-    background-size: cover;
-    background-position: center;
+    background-size: cover !important;
+    background-position: center !important;
     height: 600px;
     display: flex;
     align-items: center;
@@ -850,23 +848,6 @@ nav {
     cursor: pointer;
     font-weight: 500;
     text-decoration: none;
-}
-
-/* Hero Sections */
-.hero,
-.about-hero,
-.services-hero {
-    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
-    url('https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=1200&h=600&fit=crop');
-    background-size: cover;
-    background-position: center;
-    height: 600px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: var(--white);
-    margin-top: 74px;
 }
 
 .about-hero {
@@ -1493,50 +1474,6 @@ footer {
     color: #fff;
 }
 
-
-
-/* Profile Icon */
-.profile-icon img {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-/* Dropdown Menu */
-.profile-dropdown {
-    position: relative;
-    list-style: none;
-}
-
-.dropdown-menu {
-    display: none;
-    position: absolute;
-    right: 0;
-    top: 45px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-    width: 150px;
-    z-index: 1000;
-}
-
-.dropdown-menu li {
-    list-style: none;
-}
-
-.dropdown-menu li a {
-    display: block;
-    padding: 12px 16px;
-    color: #333;
-    text-decoration: none;
-    transition: background 0.3s ease;
-}
-
-.dropdown-menu li a:hover {
-    background-color: #f0f0f0;
-}
 .container {
     max-width: 1000px;
     margin: 0 auto;
@@ -1802,4 +1739,33 @@ body {
 
 .decline-btn:hover {
     background-color: #c0392b;
+}
+.nav-links {
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+
+.nav-links .dropdown {
+    position: relative;
+}
+
+.nav-links .dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: white;
+    padding: 10px;
+    list-style: none;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    top: 100%;
+    left: 0;
+    z-index: 10;
+}
+
+.nav-links .dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu li {
+    margin: 5px 0;
 }

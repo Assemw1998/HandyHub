@@ -40,6 +40,10 @@ class Service extends Model
     {
         return $this->belongsTo(Admin::class, 'updated_by');
     }
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 
     public static function boot()
     {

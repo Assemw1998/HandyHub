@@ -61,13 +61,13 @@
             <li class="list-group-item">
                 <div class="form-group">
                     <label>Created By</label>
-                    <div>{{$customer->adminCreatedBy->full_name}}</div>
+                    <div>{{$customer->adminCreatedBy->full_name??null}}</div>
                 </div>
             </li>
             <li class="list-group-item">
                 <div class="form-group">
                     <label>Update By</label>
-                    <div>{{$customer->adminUpdatedBy->full_name}}</div>
+                    <div>{{$customer->adminUpdatedBy->full_name??null}}</div>
                 </div>
             </li>
             <li class="list-group-item">

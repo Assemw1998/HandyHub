@@ -46,8 +46,8 @@
                         @if($customer->status) bg-success
                         @else bg-danger
                         @endif p-1">{{$customer->status_label}}</span></td>
-                        <td>{{$customer->adminCreatedBy->full_name}}</td>
-                        <td>{{$customer->adminUpdatedBy->full_name}}</td>
+                        <td>{{$customer->adminCreatedBy->full_name??null}}</td>
+                        <td>{{$customer->adminUpdatedBy->full_name??null}}</td>
                         <td>
                             <a href="{{ route('admin.dashboard.customer-view',['id' => $customer->id])}}" class="btn btn-outline-info  view d-block m-2" data-id=""><i class="fa fa-eye"></i></a>
                         </td>

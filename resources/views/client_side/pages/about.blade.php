@@ -1,7 +1,8 @@
 @extends('client_side.layouts.index')
 @section('content')
     <main>
-        <section class="about-hero">
+        <section class="hero" style=" background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+     url('{{ asset($backgroundImage->image_url) }}');">
             <div class="about-content">
                 <h1>About handyhub</h1>
                 <p>Connecting skilled professionals with homeowners since 2025</p>
