@@ -2,8 +2,10 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <div class="logo">
+        <a href="{{route("admin.dashboard.index")}}">
         <img  src="{{ asset("images/client_side_images/logo.png") }}" alt="handyhub Logo"/>
         <span>HandyHub</span>
+        </a>
     </div>
 
     <!-- Sidebar -->
@@ -20,7 +22,7 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
                 <li class="nav-item">
-                    <a href="" class="nav-link">
+                    <a href="{{ route('admin.dashboard.order-index')}}" class="nav-link">
                         <i class="nav-icon fas fa-shopping-cart"></i>
                         <p>Orders</p>
                     </a>
@@ -34,7 +36,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="" class="nav-link">
+                    <a href="{{ route('admin.dashboard.contact-us-index')}}" class="nav-link">
                         <i class="nav-icon fas fa-envelope-open-text"></i>
                         <p>Contact Us</p>
                     </a>

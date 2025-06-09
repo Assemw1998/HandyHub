@@ -44,6 +44,10 @@ class Service extends Model
     {
         return $this->hasMany(Order::class);
     }
+    public function rates()
+    {
+        return $this->hasMany(Rate::class);
+    }
 
     public static function boot()
     {
@@ -78,5 +82,14 @@ class Service extends Model
     public function getStatusLabelAttribute()
     {
         return $this->status ? "Active" : "Inactive";
+    }
+
+    public function getAverageRatingAttribute()
+    {
+        if ($this->rates->isEmpty()) {
+            return null;
+        }
+
+        return round($this->rates->avg('rate'), 1); // 4.3, 3.7, etc.
     }
 }

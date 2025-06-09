@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Validation\Rules\Password;
 
 class CustomerAuthController extends Controller
 {
@@ -20,7 +21,10 @@ class CustomerAuthController extends Controller
             'email' => 'required|email|unique:customers,email',
             'phone_number' => 'required|string|between:1,10|unique:customers,phone_number',
             'address' => 'nullable|string|max:255',
-            'password' => 'required|string|min:6',
+            'password'      => ['nullable', 'string', Password::min(8)
+                ->mixedCase()
+                ->numbers()
+                ->symbols()],
         ]);
         $profileImageFile = $request->file('profile_image');
         $path = $profileImageFile->store('/images/resource', ['disk' => 'images']);
@@ -30,7 +34,7 @@ class CustomerAuthController extends Controller
         $customer->email = $validatedData['email'];
         $customer->phone_number = $validatedData['phone_number'];
         $customer->address = $validatedData['address'] ?? null;
-        $customer->password = bcrypt($validatedData['password']);
+        $customer->password = $validatedData['password'];
         $customer->image_url = $path;
 
         $customer->save();

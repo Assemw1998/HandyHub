@@ -14,19 +14,26 @@ Route::group(['namespace' => 'App\Http\Controllers\client_side'], function () {
 
 });
 
-Route::group(['namespace' => 'App\Http\Controllers\client_side\Auth', 'as' => 'customer.', 'prefix' => 'customer'], function () {
-    Route::get('show-register', 'CustomerAuthController@showRegisterForm')->name('show-register');
-    Route::post('register', 'CustomerAuthController@register')->name('register');
+Route::group(['namespace' => 'App\Http\Controllers\client_side', 'as' => 'customer.', 'prefix' => 'customer'], function () {
+    Route::get('show-register', 'Auth\CustomerAuthController@showRegisterForm')->name('show-register');
+    Route::post('register', 'Auth\CustomerAuthController@register')->name('register');
 
-    Route::get('show-login', 'CustomerAuthController@showLoginForm')->name('show-login');
-    Route::post('login', 'CustomerAuthController@login')->name('login');
+    Route::get('show-login', 'Auth\CustomerAuthController@showLoginForm')->name('show-login');
+    Route::post('login', 'Auth\CustomerAuthController@login')->name('login');
 
-    Route::post('logout', 'CustomerAuthController@logout')->name('logout');
+    Route::post('logout', 'Auth\CustomerAuthController@logout')->name('logout');
+
+    Route::group(['middleware' => ['auth:customer'], 'as' => 'profile.', 'prefix' => 'profile'], function () {
+        Route::get('customer-index', 'profile\CustomerProfileController@index')->name('customer-index');
+        Route::post('customer-update', 'profile\CustomerProfileController@customerUpdate')->name('customer-update');
+        Route::post('store-order', 'profile\OrderController@store')->name('store-order');
+        Route::get('customer-order', 'profile\CustomerProfileController@listOrders')->name('customer-order');
+        Route::patch('customer-order-cancel/{order}', 'profile\CustomerProfileController@cancelOrder')->name('customer-order-cancel');
+        Route::post('customer-order-rate/{order}', 'profile\CustomerProfileController@rateOrder')->name('customer-order-rate');
+    });
 });
 
-Route::group(['middleware' => ['auth:customer'], 'as' => 'profile.', 'prefix' => 'profile'], function () {
-    Route::get('customer-profile', 'profile\CustomerProfileController@index')->name('customer-profile');
-});
+
 #*****************************************#
 
 
@@ -96,6 +103,15 @@ Route::group(['namespace' => 'App\Http\Controllers\admins_side\admin', 'as' => '
         Route::get('background-image-update-view/{id}', 'dashboard\BackgroundImagesController@updateView')->name('background-image-update-view');
         Route::post('background-image-update/{id}', 'dashboard\BackgroundImagesController@update')->name('background-image-update');
         Route::post('background-image-delete-image', 'dashboard\BackgroundImagesController@deleteImage')->name('background-image-delete-image');
+
+        #Orders#
+        Route::get('order-index', 'dashboard\OrderController@index')->name('order-index');
+        Route::get('order-view/{id}', 'dashboard\OrderController@view')->name('order-view');
+        Route::patch('order-update-status/{order}', 'dashboard\OrderController@updateStatus')->name('order-update-status');
+        Route::patch('order-cancel/{order}', 'dashboard\OrderController@cancel')->name('order-cancel');
+
+        #CONTACT US#
+        Route::get('contact-us-index', 'dashboard\ContactUsController@index')->name('contact-us-index');
     });
 });
 

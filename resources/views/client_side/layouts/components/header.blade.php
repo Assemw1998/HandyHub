@@ -1,8 +1,10 @@
 <header>
     <nav>
         <div class="logo">
+            <a href="{{ route('/') }}">
             <img src="{{ asset('images/client_side_images/logo.png') }}" alt="handyhub Logo"/>
             <span>HandyHub</span>
+            </a>
         </div>
 
         <ul class="nav-links">
@@ -15,8 +17,8 @@
                 <a href="#" class="dropdown-toggle">Account</a>
                 <ul class="dropdown-menu">
                     @if(Auth::guard('customer')->check())
-                        <li><a href="{{ route('profile.customer-profile') }}">Profile</a></li>
-                        <li><a href="#">My Orders</a></li>
+                        <li><a href="{{ route('customer.profile.customer-index') }}">Profile</a></li>
+                        <li><a href="{{ route('customer.profile.customer-order') }}">My Orders</a></li>
                         <li>
                             <form action="{{ route('customer.logout') }}" method="POST">
                                 @csrf

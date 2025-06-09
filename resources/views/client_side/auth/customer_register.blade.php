@@ -36,7 +36,13 @@
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input type="password" class="form-control" value="{{old('customer_password')}}" name="password" id="password" required>
+                        <div class="input-group">
+                            <input type="password" class="form-control"  name="password" id="password" required>
+                            <span class="input-group-text hide"><i class="fa fa-eye-slash" aria-hidden="true"></i></span>
+                        </div>
+                        @if ($errors->has('password'))
+                            <span class="text-danger text-sm-left d-block mt-2">{{ $errors->first('password') }}</span>
+                        @endif
                     </div>
                     <hr>
 
@@ -57,4 +63,5 @@
             </div>
         </section>
     </main>
+    <script type="text/javascript" src={{asset("custom/client_side/js/customer.js")}}></script>
 @endsection

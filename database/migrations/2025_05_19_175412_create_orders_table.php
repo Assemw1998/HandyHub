@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('service_id')->constrained()->onDelete('cascade');
             $table->foreignId('customer_id')->constrained()->onDelete('cascade');
-            $table->string('status')->default('pending');
+            $table->tinyInteger('status')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();

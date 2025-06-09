@@ -11,7 +11,7 @@
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a href='@if(auth()->user() instanceof \app\models\SuperAdmin){{route("super-admin.dashboard.index")}}@else{{route("admin.dashboard.index")}}@endif' class="nav-link">Home</a>
+            <a href='{{route("admin.dashboard.index")}}' class="nav-link">Home</a>
         </li>
     </ul>
     <!-- Right navbar links -->
@@ -26,7 +26,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="btn btn-outline-danger" href='@if(auth()->user() instanceof \app\models\SuperAdmin){{route("super-admin.logout")}}@else{{route("admin.logout")}}@endif'  role="button">
+            <a class="btn btn-outline-danger" href='{{route("admin.logout")}}'  role="button">
                 logout
             </a>
         </li>

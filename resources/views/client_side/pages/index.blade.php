@@ -27,7 +27,8 @@
                     <div class="col-lg-12">
                         <div class="category-grid">
                             @foreach($categories as $category)
-                                <a href="{{ route('category', ['id' => $category->id]) }}" class="category-box wow fadeInUp" data-wow-delay=".2s">
+                                <a href="{{ route('category', ['id' => $category->id]) }}"
+                                   class="category-box wow fadeInUp" data-wow-delay=".2s">
                                     <div class="category-icon">
                                         <i class="{{ $category->icon ?? 'flaticon-default' }}"></i>
                                     </div>
@@ -40,27 +41,30 @@
             </div>
         </section>
 
-
         <section class="services">
             <h2>Popular Services</h2>
-            <span class="section-para">The most popular</span>
             <div class="service-grid">
-                @foreach($popularServices as $popularService)
+                @forelse($popularServices as $popularService)
                     <div class="service-card">
-                        <img src="{{ asset($popularService->image_url) }}"
-                             alt="Plumbing"/>
-                        <h3>{{ $popularService->category->name }}</h3>
-                        <h6>{{ $popularService->title }}</h6>
+                        <img src="{{ $popularService->image_url ?? 'https://via.placeholder.com/200' }}"
+                             alt="{{ $popularService->title }}">
+                        <h3>{{ $popularService->handyman->full_name ?? 'Unknown' }}</h3>
                         <p>{{ $popularService->description }}</p>
-                        <div class="search-box">
-                            <span class="price">{{ $popularService->price }}.JD</span>
-                            <div class="btn-wrapper">
-                                <a href="" class="cmn-btn btn-bg-1">Book Now</a>
-                            </div>
-                        </div>
+                        <span class="rating">⭐ {{ $popularService->average_rating ?? 'N/A' }}</span>
+                        <span class="price">JD{{ number_format($popularService->price, 2) }}/hr</span>
+                        <button
+                            class="btn-secondary book-now-btn"
+                            data-service-id="{{ $popularService->id }}"
+                            data-auth="{{ auth('customer')->check() ? 'true' : 'false' }}"
+                        >
+                            Book Now
+                        </button>
                     </div>
-                @endforeach
+                @empty
+                    <p>No services found for this category.</p>
+                @endforelse
             </div>
         </section>
     </main>
+    <script type="text/javascript" src={{asset("custom/client_side/js/index.js")}}></script>
 @endsection
