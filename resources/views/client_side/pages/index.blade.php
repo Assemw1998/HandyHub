@@ -2,10 +2,10 @@
 @section('content')
     <main>
         <section class="hero" style=" background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
-     url('{{ asset($backgroundImage->image_url) }}');">
+     url('{{ asset($backgroundImage->image_url??'https://via.placeholder.com/200') }}');">
             <div class="hero-content">
-                <h1>{{$backgroundImage->background_image_title}}</h1>
-                <p>{{$backgroundImage->background_image_description}}</p>
+                <h1>{{$backgroundImage->background_image_title??'-'}}</h1>
+                <p>{{$backgroundImage->background_image_description??'-'}}</p>
             </div>
         </section>
 

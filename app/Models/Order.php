@@ -15,8 +15,25 @@ class Order extends Model
     const STATUS_CANCELLED_BY_HANDYMAN = 70;
 
 
+    protected $fillable = [
+        'service_id',
+        'customer_id',
+        'full_address',
+        'note_description',
+        'status',
+        'created_by',
+        'updated_by'
+    ];
 
-    protected $fillable = ['service_id', 'customer_id', 'status', 'created_by', 'updated_by'];
+    public static function getStepperStatuses(): array
+    {
+        return [
+            self::STATUS_PENDING => 'Pending',
+            self::STATUS_APPROVED_BY_ADMIN => 'Approved',
+            self::STATUS_IN_PROGRESS => 'In Progress',
+            self::STATUS_COMPLETED => 'Completed',
+        ];
+    }
 
     public function customer()
     {
@@ -27,7 +44,6 @@ class Order extends Model
     {
         return $this->belongsTo(Service::class);
     }
-
 
     public function getStatusLabelAttribute()
     {
@@ -63,16 +79,6 @@ class Order extends Model
             self::STATUS_CANCELLED_BY_HANDYMAN => 'bg-danger',
             default => 'bg-dark',
         };
-    }
-
-    public static function getStepperStatuses(): array
-    {
-        return [
-            self::STATUS_PENDING => 'Pending',
-            self::STATUS_APPROVED_BY_ADMIN => 'Approved',
-            self::STATUS_IN_PROGRESS => 'In Progress',
-            self::STATUS_COMPLETED => 'Completed',
-        ];
     }
 
 

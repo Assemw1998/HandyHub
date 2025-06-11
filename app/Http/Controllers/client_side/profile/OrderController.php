@@ -17,10 +17,16 @@ class OrderController extends Controller
 
         $customerId = Auth::guard('customer')->id();
 
-        // Check if there's an existing order with same service_id and customer_id where status is NOT completed
+        $excludedStatuses = [
+            Order::STATUS_COMPLETED,
+            Order::STATUS_CANCELLED_BY_ADMIN,
+            Order::STATUS_CANCELLED_BY_CUSTOMER,
+            Order::STATUS_CANCELLED_BY_HANDYMAN,
+        ];
+
         $existingOrder = Order::where('service_id', $request->service_id)
             ->where('customer_id', $customerId)
-            ->where('status', '!=', Order::STATUS_COMPLETED)
+            ->whereNotIn('status', $excludedStatuses)
             ->first();
 
         if ($existingOrder) {
@@ -34,6 +40,8 @@ class OrderController extends Controller
             'service_id' => $request->service_id,
             'customer_id' => $customerId,
             'status' => Order::STATUS_PENDING,
+            'full_address'=>$request->full_address??null,
+            'note_description'=>$request->note_description??null,
             'created_by' => $customerId,
         ]);
 

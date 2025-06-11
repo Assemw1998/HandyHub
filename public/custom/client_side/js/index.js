@@ -15,15 +15,32 @@ $(document).ready(function () {
         }
 
         Swal.fire({
-            title: 'Are you sure?',
-            text: "Do you want to book this service?",
+            title: 'Do you want to book this service?',
+            html:
+                '<input id="swal-address" class="swal2-input" placeholder="Full Address">' +
+                '<textarea id="swal-note" class="swal2-textarea" placeholder="Note / Description (optional)"></textarea>',
             icon: 'question',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, book it!'
+            confirmButtonText: 'Yes, book it!',
+            cancelButtonText: 'Cancel',
+            preConfirm: () => {
+                const address = $('#swal-address').val().trim();
+                const note = $('#swal-note').val().trim();
+
+                if (!address) {
+                    Swal.showValidationMessage('Full address is required');
+                    return false;
+                }
+
+                return {
+                    full_address: address,
+                    note_description: note
+                };
+            }
         }).then((result) => {
-            if (result.isConfirmed) {
+            if (result.isConfirmed && result.value) {
+                const { full_address, note_description } = result.value;
+
                 $.ajax({
                     url: '/customer/profile/store-order',
                     type: 'POST',
@@ -32,7 +49,9 @@ $(document).ready(function () {
                     },
                     contentType: 'application/json',
                     data: JSON.stringify({
-                        service_id: serviceId
+                        service_id: serviceId,
+                        full_address: full_address,
+                        note_description: note_description
                     }),
                     success: function (response) {
                         if (response.success) {
@@ -42,7 +61,6 @@ $(document).ready(function () {
                                 'success'
                             );
                         } else {
-                            // Should rarely get here unless server returns 200 with success:false
                             Swal.fire(
                                 'Oops!',
                                 response.message || 'Something went wrong while booking.',
@@ -52,7 +70,6 @@ $(document).ready(function () {
                     },
                     error: function (xhr) {
                         if (xhr.status === 422) {
-                            // Validation error, display the message from backend
                             const response = xhr.responseJSON;
                             Swal.fire(
                                 'Warning',
